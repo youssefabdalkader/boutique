@@ -42,19 +42,41 @@
     <!-- Categories Start -->
     <div class="container-fluid pt-5">
         <div class="row px-xl-5 pb-3">
-            <div class="col-lg-4 col-md-6 pb-1">
-                <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
-                    <p class="text-right">15 Products</p>
-                    <a href="" class="cat-img position-relative overflow-hidden mb-3">
-                        <img class="img-fluid" src="{{ asset('frontend/img/cat-1.jpg') }}" alt="">
-                    </a>
-                    <h5 class="font-weight-semi-bold m-0">Men's dresses</h5>
+
+            @foreach ($products as $product)
+                <div class="col-lg-4 col-md-6 pb-1">
+                    <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
+
+
+
+                        <a href="{{ route('product.show', $product->id) }}">
+                            class="cat-img position-relative overflow-hidden mb-3">
+
+                            @if ($product->cover)
+                                <img class="img-fluid" src="{{ asset('storage/' . $product->cover) }}"
+                                    alt="{{ $product->name }}">
+                            @else
+                                <img class="img-fluid" src="{{ asset('frontend/img/cat-1.jpg') }}"
+                                    alt="{{ $product->name }}">
+                            @endif
+
+                        </a>
+
+                        <h5 class="font-weight-semi-bold m-0">
+                            {{ $product->name }}
+                        </h5>
+
+                        <button type="button" class="btn btn-primary mt-2">
+                            <a href="{{ route('order.create', $product->id) }}" class="btn btn-primary">
+                                <i class="fas fa-shopping-cart"></i>
+                                Order Now
+                            </a>
+                        </button>
+
+
+                    </div>
                 </div>
-            </div>
-
-
-
-
+            @endforeach
 
         </div>
     </div>

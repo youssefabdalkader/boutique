@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\TagController;
+use App\Http\Controllers\frontend\OrderController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,7 +23,36 @@ Route::middleware('auth')->group(function () {
 });
 // front end pages
 
-Route::resource('product', ProductController::class)
+Route::get('/product', [App\Http\Controllers\frontend\ProductController::class, 'index'])
+    ->name('home')
+    ->middleware('RedirectGuest');
+
+Route::get('/product/create', [ProductController::class, 'create'])
+    ->name('product.create')
+    ->middleware('RedirectGuest');
+
+Route::post('/product', [ProductController::class, 'store'])
+    ->name('product.store')
+    ->middleware('RedirectGuest');
+
+Route::get('/product/{product}', [ProductController::class, 'show'])
+    ->name('product.show')
+    ->middleware('RedirectGuest');
+
+Route::get('/product/{product}/edit', [ProductController::class, 'edit'])
+    ->name('product.edit')
+    ->middleware('RedirectGuest');
+
+Route::put('/product/{product}', [ProductController::class, 'update'])
+    ->name('product.update')
+    ->middleware('RedirectGuest');
+
+Route::delete('/product/{product}', [ProductController::class, 'destroy'])
+    ->name('product.destroy')
+    ->middleware('RedirectGuest');
+
+Route::get('/order/create/{product}', [OrderController::class, 'create'])
+    ->name('order.create')
     ->middleware('RedirectGuest');
 
 Route::prefix('user')->as('frontend.')->middleware('RedirectGuest')->group(function () {
