@@ -51,9 +51,6 @@ Route::delete('/product/{product}', [ProductController::class, 'destroy'])
     ->name('product.destroy')
     ->middleware('RedirectGuest');
 
-Route::get('/order/create/{product}', [OrderController::class, 'create'])
-    ->name('order.create')
-    ->middleware('RedirectGuest');
 
 Route::prefix('user')->as('frontend.')->middleware('RedirectGuest')->group(function () {
     Route::get('/shop', function () {

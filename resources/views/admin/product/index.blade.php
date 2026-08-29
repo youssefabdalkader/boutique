@@ -46,6 +46,7 @@
                             <th>price</th>
                             <th>quantity</th>
                             <th>category</th>
+                            <th>tags</th>
                             <th>status</th>
                             <th width="200" class="text-center">Actions</th>
                         </tr>
@@ -63,6 +64,17 @@
                                 <td>{{ $product->quantity }}</td>
 
                                 <td>{{ $product->category->name ?? 'N/A' }}</td>
+
+                                <td>
+                                    <div>
+                                        @foreach ($product->tags as $tag)
+                                            <span>
+                                                {{ $tag->name }}
+                                            </span>
+                                            <br>
+                                        @endforeach
+                                    </div>
+                                </td>
                                 <td>
                                     @if ($product->status)
                                         <i class="fas fa-check-circle text-success"></i>

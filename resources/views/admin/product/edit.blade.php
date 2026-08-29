@@ -75,6 +75,19 @@
                             @endforeach
                         </select>
                     </div>
+                    <div class="col-md-6 mb-3">
+                        <label>Tags <span class="text-danger">*</span></label>
+
+                        <select name="tags[]" id="tags" class="form-control" multiple>
+
+                            @foreach ($tags as $tag)
+                                <option value="{{ $tag->id }}" @selected($product->tags->contains($tag->id))>
+                                    {{ $tag->name }}
+                                </option>
+                            @endforeach
+
+                        </select>
+                    </div>
 
                     <div class="col-md-6 mb-4">
                         <label>Status</label>

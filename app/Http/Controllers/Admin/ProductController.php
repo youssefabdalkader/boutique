@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules\Exists;
 
@@ -15,7 +16,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::with('category')->paginate(10);
+        $products = Product::with(['category', 'tags'])->paginate(10);
         return view('admin.product.index', compact('products'));
     }
 
@@ -25,7 +26,8 @@ class ProductController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('admin.product.create', compact('categories'));
+        $tags = \App\Models\Tag::all();
+        return view('admin.product.create', compact('categories', 'tags'));
     }
 
     /**
@@ -41,9 +43,13 @@ class ProductController extends Controller
             'price' => 'required|numeric|min:1',
             'quantity' => 'required|integer|min:0',
             'category_id' => 'required|exists:categories,id',
+            'tags' => 'required|array',
+            'tags.*' => 'exists:tags,id',
         ]);
 
-        Product::create($request->all());
+        $product = Product::create($request->except('tags'));
+        $product->tags()->attach($request->tags);
+
         if ($request->has('back')) {
             return redirect()->route('admin.product.create')->with('success', 'Product created successfully. You can create another product.');
         }
@@ -53,9 +59,15 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
+
+
+    /**
+     * Display the specified resource.
+     */
     public function show(string $id)
     {
         $product = Product::find($id);
+
         return view('admin.product.show', compact('product'));
     }
 
@@ -71,8 +83,11 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
         $categories = Category::all();
+        $tags = Tag::all();
 
-        return view('admin.product.edit', compact('product', 'categories'));
+        $product->load('tags');
+
+        return view('admin.product.edit', compact('product', 'categories', 'tags'));
     }
 
     /**
@@ -88,10 +103,13 @@ class ProductController extends Controller
             'price' => 'required|numeric|min:1',
             'quantity' => 'required|integer|min:0',
             'category_id' => 'required|exists:categories,id',
+            'tags' => 'required|array',
+            'tags.*' => 'exists:tags,id',
         ]);
 
         $product = Product::find($id);
-        $product->update($request->all());
+        $product->update($request->except('tags'));
+        $product->tags()->sync($request->tags);
         return redirect()->route('admin.product.index')->with('success', 'Product updated successfully');
     }
 
@@ -103,6 +121,8 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
         if (!empty($product)) {
             $product->delete();
+            $product->tags()->detach();
+
             return redirect()->route('admin.product.index')->with('success', 'Product deleted successfully.');
         } else {
             return redirect()->route('admin.product.index')->with('error', 'Product not found.');

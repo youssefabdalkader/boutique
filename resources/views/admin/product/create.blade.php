@@ -2,6 +2,23 @@
 
 @section('title', 'Create Product')
 
+@section('css')
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">@endsection
+@section('js')
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#tags').select2({
+                placeholder: 'Select Tags',
+                allowClear: true,
+                width: '100%'
+            });
+        });
+    </script>
+@endsection
 @section('content')
 
     <div class="card shadow">
@@ -63,6 +80,18 @@
                             @foreach ($categories as $category)
                                 <option value="{{ $category->id }}" @selected(old('category_id') == $category->id)>
                                     {{ $category->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label>Tags <span class="text-danger">*</span></label>
+
+                        <select name="tags[]" id="tags" class="form-control" multiple>
+                            @foreach ($tags as $tag)
+                                <option value="{{ $tag->id }}" @selected(in_array($tag->id, old('tags', [])))>
+                                    {{ $tag->name }}
                                 </option>
                             @endforeach
                         </select>
