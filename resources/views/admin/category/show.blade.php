@@ -38,6 +38,19 @@
                         <th>Slug</th>
                         <td>{{ $category->slug }}</td>
                     </tr>
+                    <tr>
+                        <th>Tags</th>
+                        <td>
+                            @if ($category->tags->isNotEmpty())
+                                <ul class="mb-0">
+                                    @foreach ($category->tags as $tag)
+                                        <li>{{ $tag->name }}</li>
+                                    @endforeach
+                                </ul>
+                            @else
+                                <span class="text-muted">No tags associated.</span>
+                            @endif
+                        </td>
 
 
 

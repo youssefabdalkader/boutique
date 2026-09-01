@@ -20,7 +20,7 @@ class CategoryController extends Controller
         }
 
         // name=adidas&status=1&sort_by=slug&direction=desc&limit=10
-        $categories = Category::withCount('products')
+        $categories = Category::withCount(['products', 'tags'])
             ->when(request('search'), function ($query) {
                 $query->where(function ($subQuery) {
                     $subQuery->where('name', 'like', '%' . request('search') . '%')
@@ -47,7 +47,8 @@ class CategoryController extends Controller
         if (!(auth()->user()->hasRole('admin') && auth()->user()->can('category.create'))) {
             return abort(403, 'Unauthorized action.');
         }
-        return view('admin.category.create');
+        $tags = \App\Models\Tag::all();
+        return view('admin.category.create', compact('tags'));
     }
 
     /**
@@ -60,6 +61,8 @@ class CategoryController extends Controller
             'slug' => 'required|string|max:255|unique:categories,slug',
             'cover' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'status' => 'required|boolean',
+            'tags' => 'required|array',
+            'tags.*' => 'exists:tags,id',
         ]);
 
         $category = new Category();
@@ -74,6 +77,9 @@ class CategoryController extends Controller
 
         $category->save();
 
+        // ربط العلامات مع الفئة
+        $category->tags()->attach($request->tags);
+
         return redirect()->route('admin.category.index')->with('success', 'Category created successfully.');
     }
 
@@ -82,7 +88,8 @@ class CategoryController extends Controller
      */
     public function show(string $id)
     {
-        $category = Category::find($id);
+        $category = Category::with('tags')->find($id);
+
         return view('admin.category.show', compact('category'));
     }
 
@@ -91,8 +98,9 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        $category = Category::find($id);
-        return view('admin.category.edit', compact('category'));
+        $category = Category::with('tags')->find($id);
+        $tags = \App\Models\Tag::all();
+        return view('admin.category.edit', compact('category', 'tags'));
     }
 
     /**
@@ -106,6 +114,8 @@ class CategoryController extends Controller
             'slug' => 'required|string|max:255|unique:categories,slug,' . $id,
             'cover' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'status' => 'required|boolean',
+            'tags' => 'required|array',
+            'tags.*' => 'exists:tags,id',
         ]);
 
         $category = Category::findOrFail($id);
@@ -113,6 +123,8 @@ class CategoryController extends Controller
         $category->name = $request->name;
         $category->slug = $request->slug;
         $category->status = $request->status;
+
+        $category->tags()->sync($request->tags);
 
         // حذف الصورة الحالية إذا اختار المستخدم ذلك
         if ($request->hasFile('cover')) {
@@ -155,6 +167,7 @@ class CategoryController extends Controller
             Storage::disk('public')->delete($category->cover);
         }
         $category->delete();
+        $category->tags()->detach();
         return redirect()->route('admin.category.index')->with('success', 'Category deleted successfully.');
     }
 }

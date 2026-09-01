@@ -66,7 +66,7 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-        $product = Product::find($id);
+        $product = Product::with('tags')->find($id);
 
         return view('admin.product.show', compact('product'));
     }

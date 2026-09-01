@@ -98,6 +98,7 @@
                             <th>Cover</th>
                             <th>Name</th>
                             <th>Slug</th>
+                            <th>Tags</th>
                             <th>Status</th>
                             <th>Products Count</th>
                             <th width="200" class="text-center">Actions</th>
@@ -119,6 +120,16 @@
                                 </td>
                                 <td>{{ $category->name }}</td>
                                 <td>{{ $category->slug }}</td>
+                                <td>
+                                    <div>
+                                        @foreach ($category->tags as $tag)
+                                            <span>
+                                                {{ $tag->name }}
+                                            </span>
+                                            <br>
+                                        @endforeach
+                                    </div>
+                                </td>
                                 <td>
                                     @if ($category->status)
                                         <i class="fas fa-check-circle text-success"></i>

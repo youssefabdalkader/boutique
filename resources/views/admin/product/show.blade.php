@@ -54,6 +54,19 @@
                         <th>Category</th>
                         <td>{{ $product->category->name ?? 'N/A' }}</td>
                     </tr>
+                    <tr>
+                        <th>Tags</th>
+                        <td>
+                            @if ($product->tags->isNotEmpty())
+                                <ul class="mb-0">
+                                    @foreach ($product->tags as $tag)
+                                        <li>{{ $tag->name }}</li>
+                                    @endforeach
+                                </ul>
+                            @else
+                                <span class="text-muted">No tags associated.</span>
+                            @endif
+                        </td>
 
                     <tr>
                         <th>Status</th>
