@@ -23,6 +23,12 @@ return [
         'route' => 'admin.tag.index',
     ],
     [
+        'permission' => 'coupon.view',
+        'title' => 'Coupons',
+        'icon' => 'fas fa-fw fa-percent',
+        'route' => 'admin.coupon.index',
+    ],
+    [
         'permission' => 'role.view',
         'title' => 'Roles',
         'icon' => 'fas fa-fw fa-user-tag',

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\RoleController;
@@ -86,6 +87,7 @@ Route::prefix('admin')->as('admin.')->group(function () {
         Route::resource('role', RoleController::class);
         Route::resource('permission', PermissionController::class);
         Route::resource('tag', TagController::class);
+        Route::resource('coupon', CouponController::class);
     });
 });
 
