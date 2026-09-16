@@ -29,6 +29,12 @@ return [
         'route' => 'admin.coupon.index',
     ],
     [
+        'permission' => 'product_comments.view',
+        'title' => 'Product Comments',
+        'icon' => 'fas fa-fw fa-comment',
+        'route' => 'admin.product_comments.index',
+    ],
+    [
         'permission' => 'role.view',
         'title' => 'Roles',
         'icon' => 'fas fa-fw fa-user-tag',

@@ -20,7 +20,7 @@ class CategoryController extends Controller
         }
 
         // name=adidas&status=1&sort_by=slug&direction=desc&limit=10
-        $categories = Category::withCount(['products', 'tags'])
+        $categories = Category::withCount(['products', 'tags'])->with('tags')
             ->when(request('search'), function ($query) {
                 $query->where(function ($subQuery) {
                     $subQuery->where('name', 'like', '%' . request('search') . '%')

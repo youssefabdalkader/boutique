@@ -67,7 +67,7 @@
                         </h5>
 
                         <button type="button" class="btn btn-primary mt-2">
-                            <a href="{{ route('order.create', $product->id) }}" class="btn btn-primary">
+                            <a href="" class="btn btn-primary">
                                 <i class="fas fa-shopping-cart"></i>
                                 Order Now
                             </a>

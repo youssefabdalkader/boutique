@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\Admin\ProductCommentController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\TagController;
@@ -88,6 +89,7 @@ Route::prefix('admin')->as('admin.')->group(function () {
         Route::resource('permission', PermissionController::class);
         Route::resource('tag', TagController::class);
         Route::resource('coupon', CouponController::class);
+        Route::resource('product_comments', ProductCommentController::class);
     });
 });
 
