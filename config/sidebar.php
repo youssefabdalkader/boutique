@@ -2,12 +2,22 @@
 
 return [
 
+
     [
         'permission' => 'category.view',
         'title' => 'Categories',
         'icon' => 'fas fa-fw fa-cog',
         'route' => 'admin.category.index',
     ],
+
+    [
+        'permission' => 'user.view',
+        'title' => 'Users',
+        'icon' => 'fas fa-fw fa-users',
+        'route' => 'admin.user.index',
+    ],
+
+
 
     [
         'permission' => 'product.view',
@@ -33,6 +43,24 @@ return [
         'title' => 'Product Comments',
         'icon' => 'fas fa-fw fa-comment',
         'route' => 'admin.product_comments.index',
+    ],
+    [
+        'permission' => 'country.view',
+        'title' => 'Countries',
+        'icon' => 'fas fa-fw fa-country',
+        'route' => 'admin.country.index',
+    ],
+    [
+        'permission' => 'governorate.view',
+        'title' => 'Governorates',
+        'icon' => 'fas fa-fw fa-governorate',
+        'route' => 'admin.governorate.index',
+    ],
+    [
+        'permission' => 'city.view',
+        'title' => 'Cities',
+        'icon' => 'fas fa-fw fa-city',
+        'route' => 'admin.city.index',
     ],
     [
         'permission' => 'role.view',

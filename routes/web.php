@@ -1,12 +1,16 @@
 <?php
 
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\CityController;
+use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\CouponController;
+use App\Http\Controllers\Admin\GovernorateController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\ProductCommentController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\TagController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\frontend\OrderController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -90,6 +94,10 @@ Route::prefix('admin')->as('admin.')->group(function () {
         Route::resource('tag', TagController::class);
         Route::resource('coupon', CouponController::class);
         Route::resource('product_comments', ProductCommentController::class);
+        Route::resource('user', UserController::class);
+        Route::resource('country', CountryController::class);
+        Route::resource('governorate', GovernorateController::class);
+        Route::resource('city', CityController::class);
     });
 });
 

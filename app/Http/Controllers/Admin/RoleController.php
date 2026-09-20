@@ -26,11 +26,11 @@ class RoleController extends Controller
      */
     public function create()
     {
-        $roles = \Spatie\Permission\Models\Role::with('permissions')->all();
+        //$roles = \Spatie\Permission\Models\Role::with('permissions')->all();
 
         $permissions = \Spatie\Permission\Models\Permission::all();
 
-        return view('admin.role.create', compact('roles', 'permissions'));
+        return view('admin.role.create', compact('permissions'));
     }
 
     /**
