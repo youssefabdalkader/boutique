@@ -27,7 +27,7 @@
 
     <div class="card shadow-sm">
         <div class="card-header d-flex justify-content-between align-items-center">
-            <h5 class="mb-0">Categories</h5>
+            <h5 class="mb-0">Product Comments</h5>
             @if (auth()->user()->can('product_comments.create'))
                 <a href="{{ route('admin.product_comments.create') }}" class="btn btn-primary btn-sm">
                     <i class="fas fa-plus"></i> Add product comments

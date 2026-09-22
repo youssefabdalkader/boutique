@@ -47,13 +47,13 @@ return [
     [
         'permission' => 'country.view',
         'title' => 'Countries',
-        'icon' => 'fas fa-fw fa-country',
+        'icon' => 'fas fa-fw fa-flag',
         'route' => 'admin.country.index',
     ],
     [
         'permission' => 'governorate.view',
         'title' => 'Governorates',
-        'icon' => 'fas fa-fw fa-governorate',
+        'icon' => 'fas fa-fw fa-building',
         'route' => 'admin.governorate.index',
     ],
     [
@@ -61,6 +61,18 @@ return [
         'title' => 'Cities',
         'icon' => 'fas fa-fw fa-city',
         'route' => 'admin.city.index',
+    ],
+    [
+        'permission' => 'user_address.view',
+        'title' => 'User Addresses',
+        'icon' => 'fas fa-fw fa-map-marker-alt',
+        'route' => 'admin.user-address.index',
+    ],
+    [
+        'permission' => 'shipping_company.view',
+        'title' => 'Shipping Companies',
+        'icon' => 'fas fa-fw fa-truck',
+        'route' => 'admin.shipping-company.index',
     ],
     [
         'permission' => 'role.view',

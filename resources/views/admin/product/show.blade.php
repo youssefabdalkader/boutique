@@ -50,6 +50,7 @@
                     <tr>
                         <th>Quantity</th>
                         <td>{{ $product->quantity }}</td>
+                    </tr>
                     <tr>
                         <th>Category</th>
                         <td>{{ $product->category->name ?? 'N/A' }}</td>

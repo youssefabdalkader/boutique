@@ -9,9 +9,10 @@ use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\ProductCommentController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\ShippingCompanyController;
 use App\Http\Controllers\Admin\TagController;
+use App\Http\Controllers\Admin\UserAddressController;
 use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\frontend\OrderController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,7 +32,7 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/product', [App\Http\Controllers\frontend\ProductController::class, 'index'])
     ->name('home')
-    ->middleware('RedirectGuest');
+    ->middleware(['RedirectGuest', 'verified']);
 
 Route::get('/product/create', [ProductController::class, 'create'])
     ->name('product.create')
@@ -97,7 +98,13 @@ Route::prefix('admin')->as('admin.')->group(function () {
         Route::resource('user', UserController::class);
         Route::resource('country', CountryController::class);
         Route::resource('governorate', GovernorateController::class);
+        Route::resource('shipping-company', ShippingCompanyController::class);
         Route::resource('city', CityController::class);
+
+        Route::get('user-address/governorates/{country}', [UserAddressController::class, 'getGovernorates'])->name('user-address.governorates');
+
+        Route::get('user-address/cities/{governorate}',  [UserAddressController::class, 'getCities'])->name('user-address.cities');
+        Route::resource('user-address', UserAddressController::class);
     });
 });
 
